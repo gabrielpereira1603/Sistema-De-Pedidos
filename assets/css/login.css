@@ -1,0 +1,66 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;600&display=swap');
+body, html {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+body {
+}
+
+.section-form {
+    text-align: center;
+}
+
+/* Estilos para tornar o formulário responsivo */
+.form {
+    background-color: white;
+    max-width: 400px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 20px;
+}
+
+.title {
+    text-align: start;
+    margin-bottom: 15px;
+}
+
+.title h1 {
+    font-family: 'Inter', sans-serif;
+}
+
+.login {
+    margin-bottom: 10px;
+}
+
+.form label,
+.form input {
+    width: 100%;
+    text-align: start;
+    box-sizing: border-box;
+}
+
+.form input[type="text"],
+.form input[type="number"] {
+    padding: 8px;
+    border: 1px solid #00ADB5;
+    border-radius: 10px;
+}
+
+.form button[type="submit"] {
+    background-color: #6AD4D9 !important;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.form button[type="submit"]:hover {
+    background-color: #338488 !important;
+}
