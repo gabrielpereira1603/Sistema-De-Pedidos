@@ -21,7 +21,6 @@ $resultPedidos = $conn->query($sqlPedidos);
 $displayedOrders = array();
 
 $newOrdersHTML = '';
-
 if ($resultPedidos->num_rows > 0) {
     while ($rowPedido = $resultPedidos->fetch_assoc()) {
         $codPedido = $rowPedido['codpedido'];
@@ -76,7 +75,7 @@ if ($resultPedidos->num_rows > 0) {
         </div>';
     }
 } else {
-    $newOrdersHTML .= "Não há pedidos abertos.";
+    $newOrdersHTML .= "<div id='pedidos-container'>Não há pedidos abertos.</div>";
 }
 
 // Fechar a conexão com o banco de dados

@@ -87,66 +87,65 @@ $_SESSION['last_activity'] = time();
 
             ?>
 
-            <?php
-            if ($resultPedidos->num_rows > 0) {
-                while ($rowPedido = $resultPedidos->fetch_assoc()) {
-                    $codPedido = $rowPedido['codpedido'];
+            <div class="table-pedido" id="pedidos-container">
+                <?php
+                    if ($resultPedidos->num_rows > 0) {
+                        while ($rowPedido = $resultPedidos->fetch_assoc()) {
+                            $codPedido = $rowPedido['codpedido'];
 
-                    // Consultar os detalhes do pedido na tabela "detalhe_pedido"
-                    $sqlDetalhes = "SELECT m.codmarmita, t.valortamanho, m.observacao, p.codpedido
-                                    FROM marmita m
-                                    INNER JOIN tamanho t ON m.codtamanho = t.codtamanho
-                                    INNER JOIN pedido p ON m.codpedido = p.codpedido
-                                    WHERE m.codpedido = '$codPedido'
-                                    ORDER BY FIELD(t.valortamanho, 'P', 'M', 'G')";
-                    $resultDetalhes = $conn->query($sqlDetalhes);
-                    ?>
+                            // Consultar os detalhes do pedido na tabela "detalhe_pedido"
+                            $sqlDetalhes = "SELECT m.codmarmita, t.valortamanho, m.observacao, p.codpedido
+                                            FROM marmita m
+                                            INNER JOIN tamanho t ON m.codtamanho = t.codtamanho
+                                            INNER JOIN pedido p ON m.codpedido = p.codpedido
+                                            WHERE m.codpedido = '$codPedido'
+                                            ORDER BY FIELD(t.valortamanho, 'P', 'M', 'G')";
+                            $resultDetalhes = $conn->query($sqlDetalhes);
+                            ?>
 
-                    <div class="table-pedido" id="pedidos-container">
-                        <table class="table">
-                            <thead>
+                                <table class="table">
+                                    <thead>
 
-                                <div class="title">
-                                    <h2> Pedido <?php echo $codPedido?></h2>
-                                </div>
+                                        <div class="title">
+                                            <h2> Pedido <?php echo $codPedido?></h2>
+                                        </div>
 
-                                <tr>
-                                    <th scope="col">Tamanho</th>
-                                    <th scope="col">Observação</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                while ($rowDetalhe = $resultDetalhes->fetch_assoc()) {
-                                    $tamanho = $rowDetalhe['valortamanho'];
-                                    $observacao = $rowDetalhe['observacao'];
-                                    ?>
+                                        <tr>
+                                            <th scope="col">Tamanho</th>
+                                            <th scope="col">Observação</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        while ($rowDetalhe = $resultDetalhes->fetch_assoc()) {
+                                            $tamanho = $rowDetalhe['valortamanho'];
+                                            $observacao = $rowDetalhe['observacao'];
+                                            ?>
 
-                                    <tr>
-                                        <td class="table-danger"><?php echo $tamanho; ?></td>
-                                        <td><?php echo $observacao; ?></td>
-                                    </tr>
+                                            <tr>
+                                                <td class="table-danger"><?php echo $tamanho; ?></td>
+                                                <td><?php echo $observacao; ?></td>
+                                            </tr>
 
-                                    <?php
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                                            <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
 
-                        <button type="button" class="btn-finalizar-pedido" data-codpedido="<?php echo $codPedido; ?>">Finalizar Pedido</button>
-                    </div>
-                    <?php
-                }
-            } else {
-                echo "Não há pedidos abertos.";
-            }
-        ?>
+                                <button type="button" class="btn-finalizar-pedido" data-codpedido="<?php echo $codPedido; ?>">Finalizar Pedido</button>
+                            <?php
+                        }
+                    } else {
+                        echo "Não há pedidos abertos.";
+                    }
+                ?>
+            </div>
 
         <?php
         // Fechar a conexão com o banco de dados
         $conn->close();
         ?>
-
 
         <script>
             // Variável global para armazenar os códigos dos pedidos já exibidos
@@ -154,22 +153,22 @@ $_SESSION['last_activity'] = time();
 
             // Função para fazer a requisição assíncrona para verificar novos pedidos
             function checkForNewOrders() {
-            var xhr = new XMLHttpRequest();
-            xhr.open('GET', 'verificar-pedidos.php', true);
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-                var newOrdersHTML = xhr.responseText;
-                
-                // Verificar se há novos pedidos a serem exibidos
-                if (newOrdersHTML.trim() !== '') {
-                    document.getElementById('pedidos-container').innerHTML = newOrdersHTML;
-                    
-                    // Limpar a lista de pedidos exibidos
-                    displayedOrders = [];
-                }
-                }
-            };
-            xhr.send();
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', 'verificar-pedidos.php', true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                        var newOrdersHTML = xhr.responseText;
+
+                        // Verificar se há novos pedidos a serem exibidos
+                        if (newOrdersHTML.trim() !== '') {
+                            document.getElementById('pedidos-container').innerHTML = newOrdersHTML;
+
+                            // Limpar a lista de pedidos exibidos
+                            displayedOrders = [];
+                        }
+                    }
+                };
+                xhr.send();
             }
 
             // Executar a função inicialmente para verificar se há novos pedidos
@@ -181,13 +180,13 @@ $_SESSION['last_activity'] = time();
 
             // Função para recarregar a página após um determinado tempo (500 milissegundos neste exemplo)
             function reloadPageWithMessage() {
-                setTimeout(function() {
+                setTimeout(function () {
                     location.reload();
                 }, 500);
             }
 
             // Capturar o evento de clique do botão "Finalizar Pedido"
-            document.addEventListener('click', function(event) {
+            document.addEventListener('click', function (event) {
                 if (event.target && event.target.classList.contains('btn-finalizar-pedido')) {
                     var codPedido = event.target.getAttribute('data-codpedido');
 
@@ -195,7 +194,7 @@ $_SESSION['last_activity'] = time();
                     var xhr = new XMLHttpRequest();
                     xhr.open('POST', 'atualizar-status-pedido.php', true);
                     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-                    xhr.onreadystatechange = function() {
+                    xhr.onreadystatechange = function () {
                         if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
                             // Atualização do status do pedido bem-sucedida
                             // Recarregar a página com mensagem de sucesso

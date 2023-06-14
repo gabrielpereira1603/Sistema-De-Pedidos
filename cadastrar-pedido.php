@@ -178,6 +178,7 @@ include("conexao.php");
                         // Limpar o formulário e exibir uma mensagem de sucesso
                         form.reset();
                         alert("Pedido realizado com sucesso!");
+                        location.reload(); // Recarregar a página
                     },
                     error: function (xhr, status, error) {
                         console.log(xhr.responseText); // Exibir a mensagem de erro no console

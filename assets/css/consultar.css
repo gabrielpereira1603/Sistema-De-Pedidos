@@ -50,7 +50,7 @@
 
 /* Estilos da coluna "Tamanho" */
 .table-pedido th:nth-child(1) {
-    width: 200px;
+    width: 15%;
     /* altere a largura da coluna "Tamanho" conforme necessário */
 }
 
@@ -64,4 +64,47 @@
 
 .btn-finalizar-pedido:hover {
     background-color: rgba(29, 187, 29, 0.829);
+}
+
+
+/* Estilos para telas menores */
+@media  screen and (max-width: 600px) {
+    /* Estilos da tabela */
+    .table-pedido {
+        font-size: 26px;
+        /* altere o tamanho da fonte conforme necessário */
+        margin: 30px;
+        border: solid 1px black;
+    }
+
+    .title {
+        background-color: #00ADB5;
+        padding: 10px;
+        text-align: center
+    }
+
+    .table tr .table-danger {
+        font-weight: 700;
+        font-size: 30px;
+        text-align: center;
+        background-color: red;
+    }
+
+    .table tr td {
+        border: solid 1px black;
+    }
+    
+    .table tr th {
+        border: solid 1px black;
+    }
+
+    .btn-finalizar-pedido {
+        width: 100%;
+        font-weight: light;
+        padding: 10px;
+        background-color: rgb(69, 155, 69);
+        border: rgb(44, 44, 44) solid 1px;
+    }
+
+
 }
