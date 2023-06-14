@@ -102,7 +102,7 @@ $_SESSION['last_activity'] = time();
                     $resultDetalhes = $conn->query($sqlDetalhes);
                     ?>
 
-                    <div class="table-pedido">
+                    <div class="table-pedido" id="pedidos-container">
                         <table class="table">
                             <thead>
 
@@ -149,6 +149,36 @@ $_SESSION['last_activity'] = time();
 
 
         <script>
+            // Variável global para armazenar os códigos dos pedidos já exibidos
+            var displayedOrders = [];
+
+            // Função para fazer a requisição assíncrona para verificar novos pedidos
+            function checkForNewOrders() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'verificar-pedidos.php', true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                var newOrdersHTML = xhr.responseText;
+                
+                // Verificar se há novos pedidos a serem exibidos
+                if (newOrdersHTML.trim() !== '') {
+                    document.getElementById('pedidos-container').innerHTML = newOrdersHTML;
+                    
+                    // Limpar a lista de pedidos exibidos
+                    displayedOrders = [];
+                }
+                }
+            };
+            xhr.send();
+            }
+
+            // Executar a função inicialmente para verificar se há novos pedidos
+            checkForNewOrders();
+
+            // Configurar um intervalo de tempo para verificar periodicamente se há novos pedidos (a cada 5 segundos neste exemplo)
+            setInterval(checkForNewOrders, 5000);
+
+
             // Função para recarregar a página após um determinado tempo (500 milissegundos neste exemplo)
             function reloadPageWithMessage() {
                 setTimeout(function() {
